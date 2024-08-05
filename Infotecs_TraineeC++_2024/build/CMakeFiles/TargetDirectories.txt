@@ -1,0 +1,11 @@
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/CMakeFiles/edit_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/CMakeFiles/rebuild_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/common/CMakeFiles/common.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/common/CMakeFiles/edit_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/common/CMakeFiles/rebuild_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/string_server/CMakeFiles/string_server.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/string_server/CMakeFiles/edit_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/string_server/CMakeFiles/rebuild_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/output_server/CMakeFiles/output_server.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/output_server/CMakeFiles/edit_cache.dir
+/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/build/output_server/CMakeFiles/rebuild_cache.dir

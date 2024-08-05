@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.28)
-#add_compile_options(-pthread)
-project(Infotecs_TraineeC___2024)
+cmake_minimum_required(VERSION 3.10)
+project(Infotecs_TraineeC++_2024)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Infotecs_TraineeC___2024 main.cpp)
-
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+# Включаем подкаталоги
+add_subdirectory(common)
+add_subdirectory(string_server)
+add_subdirectory(output_server)

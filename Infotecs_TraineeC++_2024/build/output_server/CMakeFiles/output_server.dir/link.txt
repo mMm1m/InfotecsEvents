@@ -1,0 +1,1 @@
+/usr/bin/c++  -pthread CMakeFiles/output_server.dir/main.cpp.o -o output_server  ../common/libcommon.a 

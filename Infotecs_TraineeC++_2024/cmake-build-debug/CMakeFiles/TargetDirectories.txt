@@ -1,3 +1,0 @@
-/home/max/Документы/Infotecs_TraineeC++_2024/cmake-build-debug/CMakeFiles/Infotecs_TraineeC___2024.dir
-/home/max/Документы/Infotecs_TraineeC++_2024/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/max/Документы/Infotecs_TraineeC++_2024/cmake-build-debug/CMakeFiles/rebuild_cache.dir

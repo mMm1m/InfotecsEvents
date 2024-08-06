@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Включаем подкаталоги
 add_subdirectory(common)
-add_subdirectory(string_server)
-add_subdirectory(output_server)
+add_subdirectory(program_1)
+add_subdirectory(program_2)

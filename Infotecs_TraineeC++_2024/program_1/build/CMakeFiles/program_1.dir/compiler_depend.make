@@ -812,6 +812,11 @@ CMakeFiles/program_1.dir/main.cpp.o: /home/max/Документы/InfotecsEvents
   /usr/include/c++/9/bits/atomic_base.h \
   /usr/include/c++/9/bits/atomic_lockfree_defines.h \
   /usr/include/c++/9/backward/auto_ptr.h \
+  /usr/include/c++/9/mutex \
+  /usr/include/c++/9/bits/std_mutex.h \
+  /usr/include/c++/9/bits/unique_lock.h \
+  /usr/include/c++/9/atomic \
+  /usr/include/c++/9/condition_variable \
   /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/NetworkClient.h \
   /usr/include/netinet/in.h \
   /usr/include/x86_64-linux-gnu/sys/socket.h \
@@ -835,6 +840,10 @@ CMakeFiles/program_1.dir/main.cpp.o: /home/max/Документы/InfotecsEvents
   /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/InputHandler.h \
   /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/DataProcessor.h
 
+
+/usr/include/c++/9/condition_variable:
+
+/usr/include/c++/9/atomic:
 
 /usr/include/c++/9/ext/aligned_buffer.h:
 
@@ -885,6 +894,8 @@ CMakeFiles/program_1.dir/main.cpp.o: /home/max/Документы/InfotecsEvents
 /usr/include/c++/9/bits/range_access.h:
 
 /usr/include/c++/9/ext/atomicity.h:
+
+/usr/include/c++/9/mutex:
 
 /usr/include/c++/9/bits/stringfwd.h:
 
@@ -1063,6 +1074,8 @@ CMakeFiles/program_1.dir/main.cpp.o: /home/max/Документы/InfotecsEvents
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
 /usr/include/x86_64-linux-gnu/asm/socket.h:
+
+/usr/include/c++/9/bits/std_mutex.h:
 
 /usr/include/c++/9/ext/new_allocator.h:
 
@@ -1359,6 +1372,8 @@ CMakeFiles/program_1.dir/main.cpp.o: /home/max/Документы/InfotecsEvents
 /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/NetworkClient.h:
 
 /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/main.cpp:
+
+/usr/include/c++/9/bits/unique_lock.h:
 
 /usr/include/wchar.h:
 

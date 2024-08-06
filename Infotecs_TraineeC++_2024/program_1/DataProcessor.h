@@ -6,7 +6,7 @@
 namespace processor {
   class DataProcessor {
     public:
-     std::string processData(const std::string&);
+     std::string processData(std::string&);
   };
   namespace util{
     bool isEven(char);

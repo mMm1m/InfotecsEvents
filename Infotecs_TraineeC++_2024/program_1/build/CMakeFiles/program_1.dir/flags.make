@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/../common
 
 CXX_FLAGS =  -pthread -pthread -std=gnu++11
 

@@ -188,5 +188,7 @@ CMakeFiles/program_1.dir/NetworkClient.cpp.o: \
  /usr/include/c++/9/bits/stl_construct.h \
  /usr/include/c++/9/bits/uniform_int_dist.h /usr/include/c++/9/limits \
  /usr/include/c++/9/numeric /usr/include/c++/9/bits/stl_numeric.h \
- /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/NetworkClient.h \
- /usr/include/netinet/in.h /usr/include/x86_64-linux-gnu/bits/in.h
+ /usr/include/arpa/inet.h /usr/include/netinet/in.h \
+ /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/c++/9/cstring \
+ /usr/include/string.h /usr/include/strings.h \
+ /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/NetworkClient.h

@@ -2,9 +2,7 @@
 
 int main()
 {
-  networking::NetworkServer server(3425);
-  while(true)
-  {
-    server.connectTo();
-  }
+  network::NetworkServer server(3425);
+  server.startListening();
+  return 0;
 }

@@ -2,7 +2,8 @@
 
 #include "DataProcessor.h"
 
-std::string processor::DataProcessor::processData(const std::string& str){
+std::string processor::DataProcessor::processData(std::string& str){
+  std::sort(str.rbegin(), str.rend());
   size_t evenCount = std::count_if(str.begin(), str.end(), processor::util::isEven);
   std::string output_string = processor::util::replace_if_custom(str,processor::util::isEven,"KB", evenCount);
   return output_string;

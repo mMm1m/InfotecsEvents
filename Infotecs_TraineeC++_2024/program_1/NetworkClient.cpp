@@ -6,29 +6,41 @@
 #include <csignal>
 #include <algorithm>
 #include <numeric>
+#include <arpa/inet.h>
+#include <cstring>
 #include "NetworkClient.h"
 
-network::NetworkClient::NetworkClient(int port) : sock(socket(AF_INET, SOCK_STREAM, 0)), port(port), addr(){
-  if(sock < 0)
-  {
-    perror("socket");
+
+network::NetworkClient::NetworkClient(const std::string& server_ip, int port) : server_ip(server_ip), sock(-1), port(port), addr(){
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(port);
+  if (inet_pton(AF_INET, server_ip.c_str(), &addr.sin_addr) <= 0) {
+    std::cerr << "\nInvalid address/ Address not supported\n";
     exit(1);
   }
-  addr.sin_family = AF_INET;
-  addr.sin_port = htons(3425);
-  addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 }
 
-void network::NetworkClient::connectTo(){
-  if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
-  {
-    perror("connect");
-    exit(2);
+bool network::NetworkClient::connectTo(){
+  if (sock != -1) {
+    close(sock);
   }
+
+  sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (sock < 0) {
+    perror("\nsocket\n");
+    return false;
+  }
+
+  if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+    close(sock);
+    sock = -1;
+    return false;
+  }
+  return true;
 }
 
 void network::NetworkClient::sendData(std::string& data){
-  printf("The string received from the buffer: %s\n", data.c_str());
+  printf("\nThe string received from the buffer: %s", data.c_str());
   int number = std::accumulate(data.begin(), data.end(), 0,[](int a, char b){return std::isdigit(b) ? a+(b-'0'): a;});
 
   std::string s = std::to_string(number);
@@ -38,7 +50,7 @@ void network::NetworkClient::sendData(std::string& data){
   char ans[1024];
 
   recv(sock, ans, sizeof(ans), 0);
-  printf("%s", ans);
+  printf("\n%s\n", ans);
 }
 
 int network::NetworkClient::getSock(){

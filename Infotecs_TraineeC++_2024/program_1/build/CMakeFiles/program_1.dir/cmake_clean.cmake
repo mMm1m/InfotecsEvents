@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/program_1.dir/InputHandler.cpp.o.d"
   "CMakeFiles/program_1.dir/NetworkClient.cpp.o"
   "CMakeFiles/program_1.dir/NetworkClient.cpp.o.d"
+  "CMakeFiles/program_1.dir/Worker.cpp.o"
+  "CMakeFiles/program_1.dir/Worker.cpp.o.d"
   "CMakeFiles/program_1.dir/main.cpp.o"
   "CMakeFiles/program_1.dir/main.cpp.o.d"
   "program_1"

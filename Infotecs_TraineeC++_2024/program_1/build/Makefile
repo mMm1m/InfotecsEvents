@@ -201,6 +201,30 @@ NetworkClient.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/program_1.dir/build.make CMakeFiles/program_1.dir/NetworkClient.cpp.s
 .PHONY : NetworkClient.cpp.s
 
+Worker.o: Worker.cpp.o
+.PHONY : Worker.o
+
+# target to build an object file
+Worker.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/program_1.dir/build.make CMakeFiles/program_1.dir/Worker.cpp.o
+.PHONY : Worker.cpp.o
+
+Worker.i: Worker.cpp.i
+.PHONY : Worker.i
+
+# target to preprocess a source file
+Worker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/program_1.dir/build.make CMakeFiles/program_1.dir/Worker.cpp.i
+.PHONY : Worker.cpp.i
+
+Worker.s: Worker.cpp.s
+.PHONY : Worker.s
+
+# target to generate assembly for a file
+Worker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/program_1.dir/build.make CMakeFiles/program_1.dir/Worker.cpp.s
+.PHONY : Worker.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -243,6 +267,9 @@ help:
 	@echo "... NetworkClient.o"
 	@echo "... NetworkClient.i"
 	@echo "... NetworkClient.s"
+	@echo "... Worker.o"
+	@echo "... Worker.i"
+	@echo "... Worker.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

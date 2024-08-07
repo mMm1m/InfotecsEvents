@@ -213,4 +213,5 @@ CMakeFiles/program_1.dir/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
  /usr/include/x86_64-linux-gnu/bits/in.h \
  /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/InputHandler.h \
- /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/DataProcessor.h
+ /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/DataProcessor.h \
+ /home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/Worker.h

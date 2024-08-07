@@ -14,4 +14,4 @@ namespace handler {
   }
 }
 
-#endif //INFOTECSEVENTS_DATAHANDLER_H
+#endif

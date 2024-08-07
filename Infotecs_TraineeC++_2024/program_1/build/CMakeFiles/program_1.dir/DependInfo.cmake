@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/DataProcessor.cpp" "CMakeFiles/program_1.dir/DataProcessor.cpp.o" "gcc" "CMakeFiles/program_1.dir/DataProcessor.cpp.o.d"
   "/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/InputHandler.cpp" "CMakeFiles/program_1.dir/InputHandler.cpp.o" "gcc" "CMakeFiles/program_1.dir/InputHandler.cpp.o.d"
   "/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/NetworkClient.cpp" "CMakeFiles/program_1.dir/NetworkClient.cpp.o" "gcc" "CMakeFiles/program_1.dir/NetworkClient.cpp.o.d"
+  "/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/Worker.cpp" "CMakeFiles/program_1.dir/Worker.cpp.o" "gcc" "CMakeFiles/program_1.dir/Worker.cpp.o.d"
   "/home/max/Документы/InfotecsEvents/Infotecs_TraineeC++_2024/program_1/main.cpp" "CMakeFiles/program_1.dir/main.cpp.o" "gcc" "CMakeFiles/program_1.dir/main.cpp.o.d"
   )
 

@@ -2,17 +2,17 @@
 
 #include "InputHandler.h"
 
-std::string handler_program_1::InputHandler::getInput() {
+std::string handler_programm_1::InputHandler::getInput() {
   std::string str;
   std::getline(std::cin, str);
-  if(!handler_program_1::InputHandler::checkInput(str)){
+  if(!handler_programm_1::InputHandler::checkInput(str)){
     std::cerr << "Incorrect input string\n";
     return "";
   }
   return str;
 }
 
-bool handler_program_1::InputHandler::checkInput(const std::string& str) const {
+bool handler_programm_1::InputHandler::checkInput(const std::string& str) const {
   if(str.empty()){
     return false;
   }

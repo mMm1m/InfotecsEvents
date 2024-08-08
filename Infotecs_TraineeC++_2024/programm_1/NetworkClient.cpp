@@ -8,7 +8,7 @@
 
 #include "NetworkClient.h"
 
-network_program_1::NetworkClient::NetworkClient(const std::string& server_ip, int port):
+network_programm_1::NetworkClient::NetworkClient(const std::string& server_ip, int port):
   server_ip(server_ip),
   sock(-1)
 {
@@ -22,7 +22,7 @@ network_program_1::NetworkClient::NetworkClient(const std::string& server_ip, in
   }
 }
 
-bool network_program_1::NetworkClient::connectTo(){
+bool network_programm_1::NetworkClient::connectTo(){
   if (sock != -1) {
     close(sock);
   }
@@ -40,7 +40,7 @@ bool network_program_1::NetworkClient::connectTo(){
   return true;
 }
 
-void network_program_1::NetworkClient::sendData(std::string& data){
+void network_programm_1::NetworkClient::sendData(std::string& data){
   printf("\nThe string received from the buffer: %s", data.c_str());
   int number = std::accumulate(data.begin(), data.end(), 0,[](int a, char b){
     return std::isdigit(b) ? a+(b-'0'): a;
@@ -62,6 +62,6 @@ void network_program_1::NetworkClient::sendData(std::string& data){
   printf("\n%s\n", ans);
 }
 
-int network_program_1::NetworkClient::getSock() const noexcept{
+int network_programm_1::NetworkClient::getSock() const noexcept{
   return this->sock;
 }

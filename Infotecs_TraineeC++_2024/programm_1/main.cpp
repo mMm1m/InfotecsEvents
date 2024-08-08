@@ -9,11 +9,11 @@
 
 int main() {
   try {
-    handler_program_1::InputHandler inputHandler;
-    processor_program_1::DataProcessor dataProcessor;
-    network_program_1::NetworkClient networkClient("127.0.0.1", 3425);
+    handler_programm_1::InputHandler inputHandler;
+    processor_programm_1::DataProcessor dataProcessor;
+    network_programm_1::NetworkClient networkClient("127.0.0.1", 3425);
 
-    multithreading_program_1::Worker worker(inputHandler, dataProcessor, networkClient);
+    multithreading_programm_1::Worker worker(inputHandler, dataProcessor, networkClient);
     worker.start();
     while (!worker.getValue()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(100));

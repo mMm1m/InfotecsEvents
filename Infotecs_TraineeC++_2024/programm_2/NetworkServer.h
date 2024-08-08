@@ -4,7 +4,7 @@
 #ifndef INFOTECSEVENTS_NETWORKSERVER_H
 #define INFOTECSEVENTS_NETWORKSERVER_H
 
-namespace network_program_2 {
+namespace network_programm_2 {
   class NetworkServer{
     public:
      NetworkServer() = delete;
@@ -18,7 +18,7 @@ namespace network_program_2 {
     private:
      int port;
      int server_fd;
-     handler_program_2::DataHandler dataHandler;
+     handler_programm_2::DataHandler dataHandler;
      void setupServer();
      void handleClient(int);
   };

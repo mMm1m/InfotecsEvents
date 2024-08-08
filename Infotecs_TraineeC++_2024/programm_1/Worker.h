@@ -12,11 +12,11 @@
 #include "DataProcessor.h"
 #include "NetworkClient.h"
 
-using dataProc = processor_program_1::DataProcessor;
-using netClient = network_program_1::NetworkClient;
-using inHandler = handler_program_1::InputHandler;
+using dataProc = processor_programm_1::DataProcessor;
+using netClient = network_programm_1::NetworkClient;
+using inHandler = handler_programm_1::InputHandler;
 
-namespace multithreading_program_1 {
+namespace multithreading_programm_1 {
   class Worker {
     public:
      Worker() = delete;
@@ -32,9 +32,9 @@ namespace multithreading_program_1 {
      bool getValue() const noexcept;
 
     private:
-     handler_program_1::InputHandler& inputHandler;
-     processor_program_1::DataProcessor& dataProcessor;
-     network_program_1::NetworkClient& networkClient;
+     handler_programm_1::InputHandler& inputHandler;
+     processor_programm_1::DataProcessor& dataProcessor;
+     network_programm_1::NetworkClient& networkClient;
      std::thread inputThreadHandle;
      std::thread processingThreadHandle;
      std::exception_ptr workerThreadException;

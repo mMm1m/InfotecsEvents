@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace processor_program_1 {
+namespace processor_programm_1 {
   class DataProcessor {
     public:
      DataProcessor() = default;

@@ -4,7 +4,7 @@
 #include <netinet/in.h>
 #include <string>
 
-namespace network_program_1 {
+namespace network_programm_1 {
   class NetworkClient{
     public:
      NetworkClient() = delete;

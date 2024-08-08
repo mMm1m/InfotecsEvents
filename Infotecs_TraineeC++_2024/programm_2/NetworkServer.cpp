@@ -7,22 +7,22 @@
 
 #include "NetworkServer.h"
 
-network_program_2::NetworkServer::NetworkServer(int port):
+network_programm_2::NetworkServer::NetworkServer(int port):
   port(port),
   server_fd(-1),
-  dataHandler(handler_program_2::DataHandler())
+  dataHandler(handler_programm_2::DataHandler())
 {
   assert(port >= 0);
   setupServer();
 }
 
-network_program_2::NetworkServer::~NetworkServer() {
+network_programm_2::NetworkServer::~NetworkServer() {
   if (server_fd != -1) {
     close(server_fd);
   }
 }
 
-void network_program_2::NetworkServer::setupServer() {
+void network_programm_2::NetworkServer::setupServer() {
   struct sockaddr_in address;
   int opt = 1;
 
@@ -45,7 +45,7 @@ void network_program_2::NetworkServer::setupServer() {
   }
 }
 
-void network_program_2::NetworkServer::startListening() {
+void network_programm_2::NetworkServer::startListening() {
   if (listen(server_fd, 3) < 0) {
     close(server_fd);
     throw std::runtime_error("Listen failed\n");
@@ -64,7 +64,7 @@ void network_program_2::NetworkServer::startListening() {
   }
 }
 
-void network_program_2::NetworkServer::handleClient(int client_socket) {
+void network_programm_2::NetworkServer::handleClient(int client_socket) {
   try {
     char buffer[1024];
     int valread = read(client_socket, buffer, sizeof(buffer));

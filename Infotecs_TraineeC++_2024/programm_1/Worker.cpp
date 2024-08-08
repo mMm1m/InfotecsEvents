@@ -5,10 +5,10 @@
 
 #include "Worker.h"
 
-int multithreading_program_1::Worker::sock = -1;
-multithreading_program_1::Worker* multithreading_program_1::Worker::instance = nullptr;
+int multithreading_programm_1::Worker::sock = -1;
+multithreading_programm_1::Worker* multithreading_programm_1::Worker::instance = nullptr;
 
-multithreading_program_1::Worker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient):
+multithreading_programm_1::Worker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient):
   inputHandler(inputHandler),
   dataProcessor(dataProcessor),
   networkClient(networkClient),
@@ -19,14 +19,14 @@ multithreading_program_1::Worker::Worker(inHandler& inputHandler, dataProc& data
   setupSignalHandler();
 }
 
-multithreading_program_1::Worker::~Worker() {
+multithreading_programm_1::Worker::~Worker() {
   try {
     stop();
   }
   catch (const std::exception& e) {}
 }
 
-void multithreading_program_1::Worker::start() {
+void multithreading_programm_1::Worker::start() {
   try {
     stopRequested.store(false, std::memory_order_release);
     inputThreadHandle = std::thread(&Worker::inputThread, this);
@@ -39,7 +39,7 @@ void multithreading_program_1::Worker::start() {
   }
 }
 
-void multithreading_program_1::Worker::stop() {
+void multithreading_programm_1::Worker::stop() {
   requestStop();
   if (inputThreadHandle.joinable()) {
     inputThreadHandle.join();
@@ -52,7 +52,7 @@ void multithreading_program_1::Worker::stop() {
   }
 }
 
-void multithreading_program_1::Worker::requestStop() {
+void multithreading_programm_1::Worker::requestStop() {
   {
     std::lock_guard<std::mutex> lock(queueMutex);
     stopRequested.store(true, std::memory_order_release);
@@ -60,7 +60,7 @@ void multithreading_program_1::Worker::requestStop() {
   }
 }
 
-void multithreading_program_1::Worker::inputThread() {
+void multithreading_programm_1::Worker::inputThread() {
   try {
     while (!stopRequested.load(std::memory_order_acquire)) {
       std::unique_lock<std::mutex> lock(queueMutex);
@@ -83,7 +83,7 @@ void multithreading_program_1::Worker::inputThread() {
   }
 }
 
-void multithreading_program_1::Worker::processingThread() {
+void multithreading_programm_1::Worker::processingThread() {
   try {
     std::atomic< bool > isServerAvailable(false);
     std::pair< std::string, std::string > data;
@@ -122,11 +122,11 @@ void multithreading_program_1::Worker::processingThread() {
   }
 }
 
-void multithreading_program_1::Worker::setupSignalHandler() noexcept {
+void multithreading_programm_1::Worker::setupSignalHandler() noexcept {
   std::signal(SIGINT, Worker::handleSignal);
 }
 
-void multithreading_program_1::Worker::handleSignal(int signal) {
+void multithreading_programm_1::Worker::handleSignal(int signal) {
   if (signal == SIGINT) {
     if (instance) {
       {
@@ -142,6 +142,6 @@ void multithreading_program_1::Worker::handleSignal(int signal) {
   }
 }
 
-bool multithreading_program_1::Worker::getValue() const noexcept {
+bool multithreading_programm_1::Worker::getValue() const noexcept {
   return stopRequested.load();
 }

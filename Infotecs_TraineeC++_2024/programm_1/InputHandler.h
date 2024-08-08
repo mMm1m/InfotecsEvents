@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace handler_program_1 {
+namespace handler_programm_1 {
   class InputHandler {
     public:
      InputHandler() = default;

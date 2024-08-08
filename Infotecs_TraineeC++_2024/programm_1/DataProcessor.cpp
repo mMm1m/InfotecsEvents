@@ -23,7 +23,7 @@ namespace {
   }
 }
 
-std::string processor_program_1::DataProcessor::processData(std::string& str) const{
+std::string processor_programm_1::DataProcessor::processData(std::string& str) const{
   std::sort(str.rbegin(), str.rend());
   size_t evenCount = std::count_if(str.begin(), str.end(), isEven);
   std::string output_string = replace_if_custom(str,isEven,"KB", evenCount);

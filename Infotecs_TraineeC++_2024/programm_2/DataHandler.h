@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace handler_program_2 {
+namespace handler_programm_2 {
   class DataHandler {
     public:
      DataHandler() = default;

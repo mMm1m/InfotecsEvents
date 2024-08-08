@@ -11,17 +11,17 @@ namespace network_program_2 {
      NetworkServer() = delete;
      NetworkServer(const NetworkServer& other) = delete;
      NetworkServer(NetworkServer&& other) = delete;
+     NetworkServer(int port);
      ~NetworkServer();
      NetworkServer& operator=(const NetworkServer& other) = delete;
      NetworkServer& operator=(NetworkServer&& other) = delete;
-     NetworkServer(int port);
      void startListening();
     private:
      int port;
      int server_fd;
+     handler_program_2::DataHandler dataHandler;
      void setupServer();
      void handleClient(int);
-     handler_program_2::DataHandler dataHandler;
   };
 
 }

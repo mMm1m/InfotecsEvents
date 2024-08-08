@@ -42,9 +42,9 @@ void multithreading_program_1::Worker::stop() {
 
 void multithreading_program_1::Worker::requestStop() {
   {
-  std::lock_guard<std::mutex> lock(queueMutex);
-  stopRequested.store(true, std::memory_order_release);
-  dataCondition.notify_all();
+    std::lock_guard<std::mutex> lock(queueMutex);
+    stopRequested.store(true, std::memory_order_release);
+    dataCondition.notify_all();
   }
 }
 
@@ -58,7 +58,7 @@ void multithreading_program_1::Worker::requestStop() {
         break;
       }
       std::string input = inputHandler.getInput();
-      if (input.empty()) continue;
+      if(input.empty()) continue;
       std::string modified_string = dataProcessor.processData(input);
       dataQueue.emplace(input, modified_string);
       dataCondition.notify_one();
@@ -105,6 +105,10 @@ void multithreading_program_1::Worker::setupSignalHandler() noexcept {
 void multithreading_program_1::Worker::handleSignal(int signal) {
   if (signal == SIGINT) {
     if (instance) {
+      {
+        std::unique_lock<std::mutex> lockGuard(instance->queueMutex);
+        std::cout << "\nCaught SIGINT, closing socket and exiting...\n";
+      }
       instance->requestStop();
       if (sock != -1) {
         close(sock);

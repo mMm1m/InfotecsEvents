@@ -6,7 +6,8 @@
 
 network_program_2::NetworkServer::NetworkServer(int port):
   port(port),
-  server_fd(-1),dataHandler(handler_program_2::DataHandler())
+  server_fd(-1),
+  dataHandler(handler_program_2::DataHandler())
 {
   setupServer();
 }

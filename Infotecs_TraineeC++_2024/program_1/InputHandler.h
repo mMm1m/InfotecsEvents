@@ -12,7 +12,6 @@ namespace handler_program_1 {
      ~InputHandler() = default;
      InputHandler& operator=(const InputHandler& other) = delete;
      InputHandler& operator=(InputHandler&& other) = delete;
-
      std::string getInput();
     private:
      bool checkInput(const std::string&) const;

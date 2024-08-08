@@ -5,8 +5,8 @@
 std::string handler_program_1::InputHandler::getInput() {
   std::string str;
   std::getline(std::cin, str);
-  if(!handler_program_1::InputHandler::checkInput(str) || str.empty()){
-    std::cerr << "\nIncorrect input string\n";
+  if(!handler_program_1::InputHandler::checkInput(str)){
+    std::cerr << "Incorrect input string\n";
     return "";
   }
   return str;

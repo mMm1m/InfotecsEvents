@@ -10,11 +10,10 @@ namespace network_program_1 {
      NetworkClient() = delete;
      NetworkClient(const NetworkClient& other) = default;
      NetworkClient(NetworkClient&& other) = delete;
+     NetworkClient(const std::string&, int port);
      ~NetworkClient() = default;
      NetworkClient& operator=(const NetworkClient& other) = delete;
      NetworkClient& operator=(NetworkClient&& other) = delete;
-
-     NetworkClient(const std::string&, int port);
      bool connectTo();
      void sendData(std::string&);
      int getSock() const;

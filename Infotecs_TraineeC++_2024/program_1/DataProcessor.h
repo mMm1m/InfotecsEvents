@@ -12,7 +12,6 @@ namespace processor_program_1 {
      ~DataProcessor() = default;
      DataProcessor& operator=(const DataProcessor& other) = delete;
      DataProcessor& operator=(DataProcessor&& other) = delete;
-
      std::string processData(std::string&) const;
   };
 }

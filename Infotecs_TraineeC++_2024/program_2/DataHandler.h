@@ -12,7 +12,6 @@ namespace handler_program_2 {
      ~DataHandler() = default;
      DataHandler& operator=(const DataHandler& other) = delete;
      DataHandler& operator=(DataHandler&& other) = delete;
-
      void handleData(char*, int) const;
   };
   namespace util{

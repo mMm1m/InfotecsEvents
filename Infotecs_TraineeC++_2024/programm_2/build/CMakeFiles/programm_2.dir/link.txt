@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/programm_2.dir/main.cpp.o CMakeFiles/programm_2.dir/NetworkServer.cpp.o CMakeFiles/programm_2.dir/DataHandler.cpp.o -o programm_2 

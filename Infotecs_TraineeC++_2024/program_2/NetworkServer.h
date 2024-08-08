@@ -5,7 +5,6 @@
 #define INFOTECSEVENTS_NETWORKSERVER_H
 
 namespace network_program_2 {
-
   class NetworkServer{
     public:
      NetworkServer() = delete;
@@ -23,7 +22,6 @@ namespace network_program_2 {
      void setupServer();
      void handleClient(int);
   };
-
 }
 
 #endif

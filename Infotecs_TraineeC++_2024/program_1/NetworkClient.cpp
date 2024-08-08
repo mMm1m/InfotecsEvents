@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <numeric>
 #include <arpa/inet.h>
-#include "assert.h"
 
 #include "NetworkClient.h"
 
@@ -13,12 +12,13 @@ network_program_1::NetworkClient::NetworkClient(const std::string& server_ip, in
   server_ip(server_ip),
   sock(-1)
 {
-  assert(port >= 0);
+  if(port < 0) {
+    throw std::runtime_error("Incorrect port\n");
+  }
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);
   if (inet_pton(AF_INET, server_ip.c_str(), &addr.sin_addr) <= 0) {
-    std::cerr << "\nInvalid address/ Address not supported\n";
-    exit(1);
+    throw std::runtime_error("Invalid address or address not supported\n");
   }
 }
 
@@ -29,11 +29,10 @@ bool network_program_1::NetworkClient::connectTo(){
 
   sock = socket(AF_INET, SOCK_STREAM, 0);
   if (sock < 0) {
-    perror("\nsocket\n");
-    return false;
+    throw std::runtime_error("Failed to create socket\n");
   }
 
-  if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+  if (connect(sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
     close(sock);
     sock = -1;
     return false;
@@ -50,13 +49,19 @@ void network_program_1::NetworkClient::sendData(std::string& data){
   std::string s = std::to_string(number);
   char const *packet = s.c_str();
 
-  send(sock, packet, sizeof(packet), 0);
-  char ans[1024];
+  if (send(sock, packet, s.size(), 0) < 0) {
+    throw std::runtime_error("\nFailed to send data\n");
+  }
 
-  recv(sock, ans, sizeof(ans), 0);
+  char ans[1024];
+  ssize_t received = recv(sock, ans, sizeof(ans) - 1, 0);
+  if (received <= 0) {
+    std::cerr << "\nFailed to receive data , exception on server side\n";
+  }
+  ans[received] = '\0';
   printf("\n%s\n", ans);
 }
 
-int network_program_1::NetworkClient::getSock() const{
+int network_program_1::NetworkClient::getSock() const noexcept{
   return this->sock;
 }

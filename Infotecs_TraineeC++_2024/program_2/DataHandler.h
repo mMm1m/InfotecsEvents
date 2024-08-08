@@ -12,11 +12,8 @@ namespace handler_program_2 {
      ~DataHandler() = default;
      DataHandler& operator=(const DataHandler& other) = delete;
      DataHandler& operator=(DataHandler&& other) = delete;
-     void handleData(char*, int) const;
+     void handleData(char*, int) const noexcept;
   };
-  namespace util{
-    int digitsCount(int);
-  }
 }
 
 #endif

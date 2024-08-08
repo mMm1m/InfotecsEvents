@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "assert.h"
+#include <assert.h>
 
 #include "DataProcessor.h"
 
@@ -10,7 +10,7 @@ namespace {
     return ((c - '0') & 1) == 0;
   }
 
-  template<class Pred>
+  template<typename Pred>
   std::string replace_if_custom(cstr& input_string, Pred p, cstr & replacement, size_t evenCount){
     assert(evenCount >=0 );
     std::string modified_string;

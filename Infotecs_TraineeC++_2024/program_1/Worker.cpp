@@ -5,29 +5,38 @@
 
 #include "Worker.h"
 
-using threadingWorker = multithreading_program_1::Worker;
+int multithreading_program_1::Worker::sock = -1;
+multithreading_program_1::Worker* multithreading_program_1::Worker::instance = nullptr;
 
-int threadingWorker::sock = -1;
-threadingWorker* threadingWorker::instance = nullptr;
-
-threadingWorker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient) noexcept:
+multithreading_program_1::Worker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient):
   inputHandler(inputHandler),
   dataProcessor(dataProcessor),
   networkClient(networkClient),
-  stopRequested(false)
+  stopRequested(false),
+  workerThreadException(nullptr)
 {
   instance= this;
   setupSignalHandler();
 }
 
 multithreading_program_1::Worker::~Worker() {
-  stop();
+  try {
+    stop();
+  }
+  catch (const std::exception& e) {}
 }
 
 void multithreading_program_1::Worker::start() {
-  stopRequested.store(false, std::memory_order_release);
-  inputThreadHandle = std::thread(&Worker::inputThread, this);
-  processingThreadHandle = std::thread(&Worker::processingThread, this);
+  try {
+    stopRequested.store(false, std::memory_order_release);
+    inputThreadHandle = std::thread(&Worker::inputThread, this);
+    processingThreadHandle = std::thread(&Worker::processingThread, this);
+  }
+  catch (const std::exception& e) {
+    std::cerr << "Exception in Worker::start\n";
+    stop();
+    throw;
+  }
 }
 
 void multithreading_program_1::Worker::stop() {
@@ -37,6 +46,9 @@ void multithreading_program_1::Worker::stop() {
   }
   if (processingThreadHandle.joinable()) {
     processingThreadHandle.join();
+  }
+  if (workerThreadException != nullptr) {
+    std::rethrow_exception(workerThreadException);
   }
 }
 
@@ -48,7 +60,8 @@ void multithreading_program_1::Worker::requestStop() {
   }
 }
 
-  void multithreading_program_1::Worker::inputThread() {
+void multithreading_program_1::Worker::inputThread() {
+  try {
     while (!stopRequested.load(std::memory_order_acquire)) {
       std::unique_lock<std::mutex> lock(queueMutex);
       dataCondition.wait_for(lock, std::chrono::milliseconds(100), [this]{
@@ -64,37 +77,48 @@ void multithreading_program_1::Worker::requestStop() {
       dataCondition.notify_one();
     }
   }
+  catch (...) {
+    workerThreadException = std::current_exception();
+    requestStop();
+  }
+}
 
 void multithreading_program_1::Worker::processingThread() {
-  std::atomic<bool> isServerAvailable(false);
-  std::pair<std::string, std::string> data;
-  while (true) {
-    std::unique_lock<std::mutex> lock(queueMutex);
-    dataCondition.wait(lock, [this] {
-      return stopRequested.load(std::memory_order_acquire) || !dataQueue.empty();
-    });
+  try {
+    std::atomic< bool > isServerAvailable(false);
+    std::pair< std::string, std::string > data;
+    while (true) {
+      std::unique_lock< std::mutex > lock(queueMutex);
+      dataCondition.wait(lock, [this] {
+        return stopRequested.load(std::memory_order_acquire) || !dataQueue.empty();
+      });
 
-    if (stopRequested.load(std::memory_order_acquire) && dataQueue.empty()) {
-      break;
-    }
-
-    if (!dataQueue.empty()) {
-      data = dataQueue.front();
-      dataQueue.pop();
-    }
-    if (networkClient.connectTo()) {
-      if (isServerAvailable) {
-        std::cout << "\nServer Available again!\n";
-        isServerAvailable = false;
+      if (stopRequested.load(std::memory_order_acquire) && dataQueue.empty()) {
+        break;
       }
-      std::cout << "\nInput string: " << data.first;
-      lock.unlock();
-      networkClient.sendData(data.second);
-      lock.lock();
-    } else {
-      std::cout << "\nServer Unavailable\n";
-      isServerAvailable = true;
+
+      if (!dataQueue.empty()) {
+        data = dataQueue.front();
+        dataQueue.pop();
+      }
+      if (networkClient.connectTo()) {
+        if (isServerAvailable) {
+          std::cout << "\nServer Available again!\n";
+          isServerAvailable = false;
+        }
+        std::cout << "\nInput string: " << data.first;
+        lock.unlock();
+        networkClient.sendData(data.second);
+        lock.lock();
+      } else {
+        std::cout << "\nServer Unavailable\n";
+        isServerAvailable = true;
+      }
     }
+  }
+  catch (...) {
+    workerThreadException = std::current_exception();
+    requestStop();
   }
 }
 
@@ -116,4 +140,8 @@ void multithreading_program_1::Worker::handleSignal(int signal) {
       }
     }
   }
+}
+
+bool multithreading_program_1::Worker::getValue() const noexcept {
+  return stopRequested.load();
 }

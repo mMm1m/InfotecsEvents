@@ -16,7 +16,7 @@ namespace network_program_1 {
      NetworkClient& operator=(NetworkClient&& other) = delete;
      bool connectTo();
      void sendData(std::string&);
-     int getSock() const;
+     int getSock() const noexcept;
     private:
      int sock;
      size_t port;

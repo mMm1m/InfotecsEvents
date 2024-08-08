@@ -1,5 +1,6 @@
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 #include "NetworkClient.h"
 #include "InputHandler.h"
@@ -7,15 +8,21 @@
 #include "Worker.h"
 
 int main() {
-  handler_program_1::InputHandler inputHandler;
-  processor_program_1::DataProcessor dataProcessor;
-  network_program_1::NetworkClient networkClient("127.0.0.1", 3425);
+  try {
+    handler_program_1::InputHandler inputHandler;
+    processor_program_1::DataProcessor dataProcessor;
+    network_program_1::NetworkClient networkClient("127.0.0.1", 3425);
 
-  multithreading_program_1::Worker worker(inputHandler, dataProcessor, networkClient);
-  worker.start();
-  while (!worker.stopRequested.load()) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    multithreading_program_1::Worker worker(inputHandler, dataProcessor, networkClient);
+    worker.start();
+    while (!worker.getValue()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    worker.stop();
   }
-  worker.stop();
-  return 0;
+  catch(const std::exception& e) {
+    std::cerr << "Exception caught: " << e.what() << '\n';
+    return EXIT_FAILURE;
+  }
+  return EXIT_SUCCESS;
 }

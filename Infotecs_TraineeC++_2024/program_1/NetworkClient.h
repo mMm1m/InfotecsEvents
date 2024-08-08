@@ -1,19 +1,26 @@
-#include <netinet/in.h>
-#include <string>
-
 #ifndef INFOTECSEVENTS_NETWORKCLIENT_H
 #define INFOTECSEVENTS_NETWORKCLIENT_H
 
-namespace network {
-  class NetworkClient {
+#include <netinet/in.h>
+#include <string>
+
+namespace network_program_1 {
+  class NetworkClient{
     public:
+     NetworkClient() = delete;
+     NetworkClient(const NetworkClient& other) = default;
+     NetworkClient(NetworkClient&& other) = delete;
+     ~NetworkClient() = default;
+     NetworkClient& operator=(const NetworkClient& other) = delete;
+     NetworkClient& operator=(NetworkClient&& other) = delete;
+
      NetworkClient(const std::string&, int port);
      bool connectTo();
      void sendData(std::string&);
-     int getSock();
+     int getSock() const;
     private:
      int sock;
-     int port;
+     size_t port;
      struct sockaddr_in addr;
      std::string server_ip;
   };

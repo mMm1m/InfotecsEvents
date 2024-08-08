@@ -1,31 +1,31 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include <cstring>
-#include <iostream>
+
 #include "NetworkServer.h"
 
-network::NetworkServer::NetworkServer(int port) : port(port), server_fd(-1), dataHandler(handler::DataHandler()) {
+network_program_2::NetworkServer::NetworkServer(int port):
+  port(port),
+  server_fd(-1),dataHandler(handler_program_2::DataHandler())
+{
   setupServer();
 }
 
-network::NetworkServer::~NetworkServer() {
+network_program_2::NetworkServer::~NetworkServer() {
   if (server_fd != -1) {
     close(server_fd);
   }
 }
 
-void network::NetworkServer::setupServer() {
+void network_program_2::NetworkServer::setupServer() {
   struct sockaddr_in address;
   int opt = 1;
 
-  // Creating socket file descriptor
   if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
     perror("socket failed");
     exit(EXIT_FAILURE);
   }
 
-  // Forcefully attaching socket to the port
   if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
     perror("setsockopt");
     close(server_fd);
@@ -36,7 +36,6 @@ void network::NetworkServer::setupServer() {
   address.sin_addr.s_addr = INADDR_ANY;
   address.sin_port = htons(port);
 
-  // Forcefully attaching socket to the port
   if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
     perror("bind failed");
     close(server_fd);
@@ -44,7 +43,7 @@ void network::NetworkServer::setupServer() {
   }
 }
 
-void network::NetworkServer::startListening() {
+void network_program_2::NetworkServer::startListening() {
   if (listen(server_fd, 3) < 0) {
     perror("listen");
     close(server_fd);
@@ -65,7 +64,7 @@ void network::NetworkServer::startListening() {
   }
 }
 
-void network::NetworkServer::handleClient(int client_socket) {
+void network_program_2::NetworkServer::handleClient(int client_socket) {
   char buffer[1024];
   int valread = read(client_socket, buffer, 1024);
   if (valread > 0) {
@@ -76,4 +75,3 @@ void network::NetworkServer::handleClient(int client_socket) {
   }
   close(client_socket);
 }
-

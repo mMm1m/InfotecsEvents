@@ -1,5 +1,3 @@
-
-
 #include <thread>
 #include <iostream>
 #include <csignal>
@@ -7,27 +5,32 @@
 
 #include "Worker.h"
 
-int Worker::sock = -1;
-Worker* Worker::instance = nullptr;
+using threadingWorker = multithreading_program_1::Worker;
 
-Worker::Worker(handler::InputHandler& inputHandler, processor::DataProcessor& dataProcessor, network::NetworkClient& networkClient)
-  : inputHandler(inputHandler), dataProcessor(dataProcessor), networkClient(networkClient), stopRequested(false)
-  {
+int threadingWorker::sock = -1;
+threadingWorker* threadingWorker::instance = nullptr;
+
+threadingWorker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient) noexcept:
+  inputHandler(inputHandler),
+  dataProcessor(dataProcessor),
+  networkClient(networkClient),
+  stopRequested(false)
+{
   instance= this;
   setupSignalHandler();
 }
 
-Worker::~Worker() {
+multithreading_program_1::Worker::~Worker() {
   stop();
 }
 
-void Worker::start() {
+void multithreading_program_1::Worker::start() {
   stopRequested.store(false, std::memory_order_release);
   inputThreadHandle = std::thread(&Worker::inputThread, this);
   processingThreadHandle = std::thread(&Worker::processingThread, this);
 }
 
-void Worker::stop() {
+void multithreading_program_1::Worker::stop() {
   requestStop();
   if (inputThreadHandle.joinable()) {
     inputThreadHandle.join();
@@ -37,7 +40,7 @@ void Worker::stop() {
   }
 }
 
-void Worker::requestStop() {
+void multithreading_program_1::Worker::requestStop() {
   {
   std::lock_guard<std::mutex> lock(queueMutex);
   stopRequested.store(true, std::memory_order_release);
@@ -45,10 +48,12 @@ void Worker::requestStop() {
   }
 }
 
-  void Worker::inputThread() {
+  void multithreading_program_1::Worker::inputThread() {
     while (!stopRequested.load(std::memory_order_acquire)) {
       std::unique_lock<std::mutex> lock(queueMutex);
-      dataCondition.wait_for(lock, std::chrono::milliseconds(100), [this] { return stopRequested.load(std::memory_order_acquire); });
+      dataCondition.wait_for(lock, std::chrono::milliseconds(100), [this]{
+        return stopRequested.load(std::memory_order_acquire);
+      });
       if (stopRequested.load(std::memory_order_acquire)) {
         break;
       }
@@ -60,7 +65,7 @@ void Worker::requestStop() {
     }
   }
 
-void Worker::processingThread() {
+void multithreading_program_1::Worker::processingThread() {
   std::atomic<bool> isServerAvailable(false);
   std::pair<std::string, std::string> data;
   while (true) {
@@ -93,11 +98,11 @@ void Worker::processingThread() {
   }
 }
 
-void Worker::setupSignalHandler() {
+void multithreading_program_1::Worker::setupSignalHandler() noexcept {
   std::signal(SIGINT, Worker::handleSignal);
 }
 
-void Worker::handleSignal(int signal) {
+void multithreading_program_1::Worker::handleSignal(int signal) {
   if (signal == SIGINT) {
     if (instance) {
       instance->requestStop();
@@ -108,5 +113,3 @@ void Worker::handleSignal(int signal) {
     }
   }
 }
-
-

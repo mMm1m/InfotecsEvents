@@ -3,15 +3,17 @@
 #include <cstdlib>
 #include <iostream>
 #include <unistd.h>
-#include <csignal>
-#include <algorithm>
 #include <numeric>
 #include <arpa/inet.h>
-#include <cstring>
+#include "assert.h"
+
 #include "NetworkClient.h"
 
-
-network::NetworkClient::NetworkClient(const std::string& server_ip, int port) : server_ip(server_ip), sock(-1), port(port), addr(){
+network_program_1::NetworkClient::NetworkClient(const std::string& server_ip, int port):
+  server_ip(server_ip),
+  sock(-1)
+{
+  assert(port >= 0);
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);
   if (inet_pton(AF_INET, server_ip.c_str(), &addr.sin_addr) <= 0) {
@@ -20,7 +22,7 @@ network::NetworkClient::NetworkClient(const std::string& server_ip, int port) : 
   }
 }
 
-bool network::NetworkClient::connectTo(){
+bool network_program_1::NetworkClient::connectTo(){
   if (sock != -1) {
     close(sock);
   }
@@ -39,9 +41,11 @@ bool network::NetworkClient::connectTo(){
   return true;
 }
 
-void network::NetworkClient::sendData(std::string& data){
+void network_program_1::NetworkClient::sendData(std::string& data){
   printf("\nThe string received from the buffer: %s", data.c_str());
-  int number = std::accumulate(data.begin(), data.end(), 0,[](int a, char b){return std::isdigit(b) ? a+(b-'0'): a;});
+  int number = std::accumulate(data.begin(), data.end(), 0,[](int a, char b){
+    return std::isdigit(b) ? a+(b-'0'): a;
+  });
 
   std::string s = std::to_string(number);
   char const *packet = s.c_str();
@@ -53,7 +57,6 @@ void network::NetworkClient::sendData(std::string& data){
   printf("\n%s\n", ans);
 }
 
-int network::NetworkClient::getSock(){
+int network_program_1::NetworkClient::getSock() const{
   return this->sock;
 }
-

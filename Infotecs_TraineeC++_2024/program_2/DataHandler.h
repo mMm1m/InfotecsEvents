@@ -3,11 +3,17 @@
 
 #include <string>
 
-namespace handler {
+namespace handler_program_2 {
   class DataHandler {
     public:
-     void handleData(char*, int);
-     void parseInput(const std::string&);
+     DataHandler() = default;
+     DataHandler(const DataHandler& other) = delete;
+     DataHandler(DataHandler&& other) = default;
+     ~DataHandler() = default;
+     DataHandler& operator=(const DataHandler& other) = delete;
+     DataHandler& operator=(DataHandler&& other) = delete;
+
+     void handleData(char*, int) const;
   };
   namespace util{
     int digitsCount(int);

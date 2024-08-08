@@ -1,45 +1,54 @@
+#ifndef INFOTECSEVENTS_WORKER_H
+#define INFOTECSEVENTS_WORKER_H
+
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
 #include <queue>
 
-#ifndef INFOTECSEVENTS_WORKER_H
-#define INFOTECSEVENTS_WORKER_H
 #include "InputHandler.h"
 #include "DataProcessor.h"
 #include "NetworkClient.h"
 
+using dataProc = processor_program_1::DataProcessor;
+using netClient = network_program_1::NetworkClient;
+using inHandler = handler_program_1::InputHandler;
 
-class Worker {
-  public:
-   Worker(handler::InputHandler& inputHandler, processor::DataProcessor& dataProcessor, network::NetworkClient& networkClient);
-   ~Worker();
-   void start();
-   void stop();
-   void setupSignalHandler();
+namespace multithreading_program_1 {
+  class Worker {
+    public:
+     Worker() = delete;
+     Worker(const Worker& other) = delete;
+     Worker(Worker&& other) = delete;
+     ~Worker();
+     Worker& operator=(const Worker& other) = delete;
+     Worker& operator=(Worker&& other) = delete;
+     Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient) noexcept;
+     void start();
+     void stop();
+     void setupSignalHandler() noexcept;
+     std::atomic< bool > stopRequested;
 
-   std::atomic<bool> stopRequested;
+    private:
+     void inputThread();
+     void processingThread();
+     void requestStop();
+     static void handleSignal(int signal);
 
-  private:
-   void inputThread();
-   void processingThread();
-   void requestStop();
+     handler_program_1::InputHandler& inputHandler;
+     processor_program_1::DataProcessor& dataProcessor;
+     network_program_1::NetworkClient& networkClient;
+     std::thread inputThreadHandle;
+     std::thread processingThreadHandle;
 
-   static void handleSignal(int signal);
+     std::queue< std::pair< std::string, std::string>> dataQueue;
+     std::mutex queueMutex;
+     std::condition_variable dataCondition;
 
-   handler::InputHandler& inputHandler;
-   processor::DataProcessor& dataProcessor;
-   network::NetworkClient& networkClient;
-   std::thread inputThreadHandle;
-   std::thread processingThreadHandle;
-
-   std::queue<std::pair<std::string, std::string>> dataQueue;
-   std::mutex queueMutex;
-   std::condition_variable dataCondition;
-
-   static Worker* instance;
-   static int  sock;
-};
+     static Worker* instance;
+     static int sock;
+  };
+}
 
 #endif

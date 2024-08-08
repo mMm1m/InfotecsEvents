@@ -1,19 +1,20 @@
-#include <string>
-
 #ifndef INFOTECSEVENTS_DATAPROCESSOR_H
 #define INFOTECSEVENTS_DATAPROCESSOR_H
 
-namespace processor {
+#include <string>
+
+namespace processor_program_1 {
   class DataProcessor {
     public:
-     std::string processData(std::string&);
-  };
-  namespace util{
-    bool isEven(char);
+     DataProcessor() = default;
+     DataProcessor(const DataProcessor& other) = delete;
+     DataProcessor(DataProcessor&& other) = delete;
+     ~DataProcessor() = default;
+     DataProcessor& operator=(const DataProcessor& other) = delete;
+     DataProcessor& operator=(DataProcessor&& other) = delete;
 
-    template< class UnaryPred>
-    std::string replace_if_custom(const std::string&, UnaryPred, const std::string&, size_t);
-  }
+     std::string processData(std::string&) const;
+  };
 }
 
 #endif

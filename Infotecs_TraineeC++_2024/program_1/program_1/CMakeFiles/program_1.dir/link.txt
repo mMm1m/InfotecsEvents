@@ -1,0 +1,1 @@
+/usr/bin/c++  -pthread CMakeFiles/program_1.dir/main.cpp.o CMakeFiles/program_1.dir/InputHandler.cpp.o CMakeFiles/program_1.dir/DataProcessor.cpp.o CMakeFiles/program_1.dir/NetworkClient.cpp.o CMakeFiles/program_1.dir/Worker.cpp.o -o program_1 

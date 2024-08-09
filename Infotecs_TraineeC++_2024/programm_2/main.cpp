@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "NetworkServer.h"
+#include "../common/network.h"
 
 int main() {
   try {
-    network_programm_2::NetworkServer server(3425);
+    network::NetworkServer server(3425);
     server.startListening();
   }
   catch(const std::exception& e) {

@@ -1,7 +1,7 @@
 #include <cstring>
 #include <assert.h>
 
-#include "DataHandler.h"
+#include "../common/handler.h"
 
 namespace {
   int digitsCount(int number)
@@ -17,7 +17,7 @@ namespace {
   }
 }
 
-void handler_programm_2::DataHandler::handleData(char* ans, int sum) const noexcept {
+void handler::DataHandler::handleData(char* ans, int sum) const noexcept {
   if(sum > 99 && ((sum&31) == 0)){
     sprintf(ans, "Received value is %d , amount of symbols is %d\n", sum, digitsCount(sum));
   } else{

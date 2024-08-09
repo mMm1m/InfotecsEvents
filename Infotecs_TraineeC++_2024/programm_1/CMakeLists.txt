@@ -1,12 +1,15 @@
-cmake_minimum_required(VERSION 3.25.1)
+cmake_minimum_required(VERSION 3.15)
 add_compile_options(-pthread)
 project(programm_1)
 
-set(CMAKE_CXX_STANDARD 11)
-
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 add_executable(programm_1 main.cpp InputHandler.cpp
         DataProcessor.cpp
         NetworkClient.cpp
-        Worker.cpp
+        ThreadsExecutor.cpp
 )
+
+target_include_directories(programm_1 PRIVATE ${CMAKE_SOURCE_DIR}/common)
+
+set(CMAKE_CXX_STANDARD 17)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")

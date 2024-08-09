@@ -3,15 +3,18 @@
 #include <csignal>
 #include <unistd.h>
 
-#include "Worker.h"
+#include "../common/network.h"
+#include "../common/handler.h"
+#include "DataProcessor.h"
+#include "ThreadsExecutor.h"
 
-int multithreading_programm_1::Worker::sock = -1;
-multithreading_programm_1::Worker* multithreading_programm_1::Worker::instance = nullptr;
+int multithreading::ThreadsExecutor::sock = -1;
+multithreading::ThreadsExecutor* multithreading::ThreadsExecutor::instance = nullptr;
 
-multithreading_programm_1::Worker::Worker(inHandler& inputHandler, dataProc& dataProcessor,netClient& networkClient):
-  inputHandler(inputHandler),
-  dataProcessor(dataProcessor),
-  networkClient(networkClient),
+multithreading::ThreadsExecutor::ThreadsExecutor():
+  inputHandler(handler::InputHandler()),
+  dataProcessor(processor::DataProcessor()),
+  networkClient(network::NetworkClient("127.0.0.1", 3425)),
   stopRequested(false),
   workerThreadException(nullptr)
 {
@@ -19,18 +22,18 @@ multithreading_programm_1::Worker::Worker(inHandler& inputHandler, dataProc& dat
   setupSignalHandler();
 }
 
-multithreading_programm_1::Worker::~Worker() {
+multithreading::ThreadsExecutor::~ThreadsExecutor() {
   try {
     stop();
   }
   catch (const std::exception& e) {}
 }
 
-void multithreading_programm_1::Worker::start() {
+void multithreading::ThreadsExecutor::start() {
   try {
     stopRequested.store(false, std::memory_order_release);
-    inputThreadHandle = std::thread(&Worker::inputThread, this);
-    processingThreadHandle = std::thread(&Worker::processingThread, this);
+    inputThreadHandle = std::thread(&ThreadsExecutor::inputThread, this);
+    processingThreadHandle = std::thread(&ThreadsExecutor::processingThread, this);
   }
   catch (const std::exception& e) {
     std::cerr << "Exception in Worker::start\n";
@@ -39,7 +42,7 @@ void multithreading_programm_1::Worker::start() {
   }
 }
 
-void multithreading_programm_1::Worker::stop() {
+void multithreading::ThreadsExecutor::stop() {
   requestStop();
   if (inputThreadHandle.joinable()) {
     inputThreadHandle.join();
@@ -52,7 +55,7 @@ void multithreading_programm_1::Worker::stop() {
   }
 }
 
-void multithreading_programm_1::Worker::requestStop() {
+void multithreading::ThreadsExecutor::requestStop() {
   {
     std::lock_guard<std::mutex> lock(queueMutex);
     stopRequested.store(true, std::memory_order_release);
@@ -60,7 +63,7 @@ void multithreading_programm_1::Worker::requestStop() {
   }
 }
 
-void multithreading_programm_1::Worker::inputThread() {
+void multithreading::ThreadsExecutor::inputThread() {
   try {
     while (!stopRequested.load(std::memory_order_acquire)) {
       std::unique_lock<std::mutex> lock(queueMutex);
@@ -83,7 +86,7 @@ void multithreading_programm_1::Worker::inputThread() {
   }
 }
 
-void multithreading_programm_1::Worker::processingThread() {
+void multithreading::ThreadsExecutor::processingThread() {
   try {
     std::atomic< bool > isServerAvailable(false);
     std::pair< std::string, std::string > data;
@@ -122,11 +125,11 @@ void multithreading_programm_1::Worker::processingThread() {
   }
 }
 
-void multithreading_programm_1::Worker::setupSignalHandler() noexcept {
-  std::signal(SIGINT, Worker::handleSignal);
+void multithreading::ThreadsExecutor::setupSignalHandler() noexcept {
+  std::signal(SIGINT, ThreadsExecutor::handleSignal);
 }
 
-void multithreading_programm_1::Worker::handleSignal(int signal) {
+void multithreading::ThreadsExecutor::handleSignal(int signal) {
   if (signal == SIGINT) {
     if (instance) {
       {
@@ -142,6 +145,6 @@ void multithreading_programm_1::Worker::handleSignal(int signal) {
   }
 }
 
-bool multithreading_programm_1::Worker::getValue() const noexcept {
+bool multithreading::ThreadsExecutor::getValue() const noexcept {
   return stopRequested.load();
 }

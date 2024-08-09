@@ -3,12 +3,12 @@
 
 #include <string>
 
-namespace processor_programm_1 {
+namespace processor {
   class DataProcessor {
     public:
      DataProcessor() = default;
      DataProcessor(const DataProcessor& other) = delete;
-     DataProcessor(DataProcessor&& other) = delete;
+     DataProcessor(DataProcessor&& other) = default;
      ~DataProcessor() = default;
      DataProcessor& operator=(const DataProcessor& other) = delete;
      DataProcessor& operator=(DataProcessor&& other) = delete;
